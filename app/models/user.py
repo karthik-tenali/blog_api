@@ -28,4 +28,4 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     modified_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     
-    posts: Mapped[list["Post"]] = relationship(back_populates="author") # type: ignore
+    # posts: Mapped[list["Post"]] = relationship(back_populates="author") # type: ignore
