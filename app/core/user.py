@@ -3,7 +3,6 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
-
 from app.models.user import User
 from app.utils.hash import hash_password, verify_password
 
