@@ -13,6 +13,10 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     REDIS_URL: str = "redis://localhost:6379"
     DEBUG: bool = False
+    DB_POOL_SIZE: int = 10
+    DB_MAX_OVERFLOW: int = 20
+    DB_POOL_TIMEOUT: int = 30
+    DB_POOL_RECYCLE: int = 1800
     
     @field_validator("SECRET_KEY")
     def validate_secret_key(cls, v):

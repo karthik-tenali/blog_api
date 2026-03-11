@@ -1,4 +1,5 @@
 from typing import Annotated
+import uuid
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
@@ -59,7 +60,7 @@ async def refresh_token(input_data: RefreshRequest, db: db_dependency):
             detail="Invalid refresh token",
         )
         
-    uid = payload.get("sub")
+    uid = uuid.UUID(payload.get("sub"))
     
     user = await get_user_by_uid(db, uid) # type: ignore
     if not user or not user.is_active:
