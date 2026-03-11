@@ -1,6 +1,7 @@
 from typing import Annotated
 import uuid
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
 from app.schemas.auth import LoginRequest, RefreshRequest, TokenResponse
@@ -32,8 +33,8 @@ async def create_new_user(input_data: UserCreate, db: db_dependency):
     return user
 
 @router.post("/login", response_model=TokenResponse)
-async def login_user(input_data: LoginRequest, db: db_dependency):
-    user = await authenticate_user(db, input_data.email, input_data.password)
+async def login_user(db: db_dependency, input_data: OAuth2PasswordRequestForm = Depends()):
+    user = await authenticate_user(db, input_data.username, input_data.password)
     
     if not user:
         raise HTTPException(
@@ -75,3 +76,4 @@ async def refresh_token(input_data: RefreshRequest, db: db_dependency):
         access_token=access_token,
         refresh_token=input_data.refresh_token,
     )
+    
